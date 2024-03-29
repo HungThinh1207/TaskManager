@@ -8,16 +8,16 @@ export const createTask = async (req, res) => {
 
     const { title, team, stage, date, priority, assets } = req.body;
 
-    let text = "New task has been assigned to you";
+    let text = "Nhiệm vụ mới đã được giao cho bạn";
     if (team?.length > 1) {
-      text = text + ` and ${team?.length - 1} others.`;
+      text = text + ` và ${team?.length - 1} người khác`;
     }
 
     text =
       text +
-      ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
+      ` Ưu tiên nhiệm vụ được đặt là ${priority} vì vậy hãy kiểm tra và hành động phù hợp. Ngày nhiệm vụ là ${new Date(
         date
-      ).toDateString()}. Thank you!!!`;
+      ).toDateString()}. Cảm ơn`;
 
     const activity = {
       type: "assigned",
@@ -43,7 +43,7 @@ export const createTask = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, task, message: "Task created successfully." });
+      .json({ status: true, task, message: "Tạo nhiệm vụ thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -58,7 +58,7 @@ export const duplicateTask = async (req, res) => {
 
     const newTask = await Task.create({
       ...task,
-      title: task.title + " - Duplicate",
+      title: task.title + " - sao chép",
     });
 
     newTask.team = task.team;
@@ -70,16 +70,16 @@ export const duplicateTask = async (req, res) => {
     await newTask.save();
 
     //alert users of the task
-    let text = "New task has been assigned to you";
+    let text = "Nhiệm vụ mới đã được giao cho bạn";
     if (task.team.length > 1) {
-      text = text + ` and ${task.team.length - 1} others.`;
+      text = text + ` và ${task.team.length - 1} người khác.`;
     }
 
     text =
       text +
-      ` The task priority is set a ${
+      ` Ưu tiên nhiệm vụ được đặt là ${
         task.priority
-      } priority, so check and act accordingly. The task date is ${task.date.toDateString()}. Thank you!!!`;
+      } vì vậy hãy kiểm tra và hành động phù hợp. Ngày nhiệm vụ là ${task.date.toDateString()}.!!!`;
 
     await Notice.create({
       team: task.team,
@@ -89,7 +89,7 @@ export const duplicateTask = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "Task duplicated successfully." });
+      .json({ status: true, message: "Nhiệm vụ được sao chép thành công." });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -116,7 +116,7 @@ export const postTaskActivity = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "Activity posted successfully." });
+      .json({ status: true, message: "Hoạt động đã đăng thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -151,7 +151,7 @@ export const dashboardStatistics = async (req, res) => {
       .limit(10)
       .sort({ _id: -1 });
 
-    //   group task by stage and calculate counts
+    //Nhóm nhiệm vụ theo giai đoạn và tính toán
     const groupTaskks = allTasks.reduce((result, task) => {
       const stage = task.stage;
 
@@ -164,7 +164,7 @@ export const dashboardStatistics = async (req, res) => {
       return result;
     }, {});
 
-    // Group tasks by priority
+    //Nhóm nhiệm vụ theo mức độ ưu tiên
     const groupData = Object.entries(
       allTasks.reduce((result, task) => {
         const { priority } = task;
@@ -174,7 +174,7 @@ export const dashboardStatistics = async (req, res) => {
       }, {})
     ).map(([name, total]) => ({ name, total }));
 
-    // calculate total tasks
+    //Tính tổng nhiệm vụ
     const totalTasks = allTasks?.length;
     const last10Task = allTasks?.slice(0, 10);
 
@@ -188,7 +188,7 @@ export const dashboardStatistics = async (req, res) => {
 
     res.status(200).json({
       status: true,
-      message: "Successfully",
+      message: "Thành công",
       ...summary,
     });
   } catch (error) {
@@ -268,7 +268,7 @@ export const createSubTask = async (req, res) => {
     await task.save();
 
     res.status(200).js;
-    on({ status: true, message: "SubTask added successfully." });
+    on({ status: true, message: "Nhiệm vụ phụ thêm thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -293,7 +293,7 @@ export const updateTask = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "Task duplicated successfully." });
+      .json({ status: true, message: "Nhân đôi nhiệm vụ thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -312,7 +312,7 @@ export const trashTask = async (req, res) => {
 
     res.status(200).json({
       status: true,
-      message: `Task trashed successfully.`,
+      message: `Nhiệm vụ được chuyển vào thùng rác thành công`,
     });
   } catch (error) {
     console.log(error);
@@ -343,7 +343,7 @@ export const deleteRestoreTask = async (req, res) => {
 
     res.status(200).json({
       status: true,
-      message: `Operation performed successfully.`,
+      message: `Thao tác được thực hiện thành công`,
     });
   } catch (error) {
     console.log(error);

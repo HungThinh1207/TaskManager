@@ -22,13 +22,13 @@ const protectRoute = async (req, res, next) => {
     } else {
       return res
         .status(401)
-        .json({ status: false, message: "Not authorized. Try login again." });
+        .json({ status: false, message: "Không được phép, hãy thử đăng nhập lại" });
     }
   } catch (error) {
     console.error(error);
     return res
       .status(401)
-      .json({ status: false, message: "Not authorized. Try login again." });
+      .json({ status: false, message: "Không được phép, hãy thử đăng nhập lại" });
   }
 };
 
@@ -38,7 +38,7 @@ const isAdminRoute = (req, res, next) => {
   } else {
     return res.status(401).json({
       status: false,
-      message: "Not authorized as admin. Try login as admin.",
+      message: "Không được ủy quyền với tư cách quản trị viên, hãy thử đăng nhập với tư cách quản trị viên",
     });
   }
 };

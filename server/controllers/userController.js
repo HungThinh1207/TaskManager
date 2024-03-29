@@ -12,7 +12,7 @@ export const registerUser = async (req, res) => {
     if (userExist) {
       return res.status(400).json({
         status: false,
-        message: "User already exists",
+        message: "Người dùng đã tồn tại",
       });
     }
 
@@ -34,7 +34,7 @@ export const registerUser = async (req, res) => {
     } else {
       return res
         .status(400)
-        .json({ status: false, message: "Invalid user data" });
+        .json({ status: false, message: "Dữ liệu người dùng không hợp lệ" });
     }
   } catch (error) {
     console.log(error);
@@ -51,13 +51,13 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return res
         .status(401)
-        .json({ status: false, message: "Invalid email or password." });
+        .json({ status: false, message: "Email hoặc mật khẩu không hợp lệ..." });
     }
 
     if (!user?.isActive) {
       return res.status(401).json({
         status: false,
-        message: "User account has been deactivated, contact the administrator",
+        message: "Tài khoản người dùng đã bị vô hiệu hóa, hãy liên hệ với quản trị viên",
       });
     }
 
@@ -72,7 +72,7 @@ export const loginUser = async (req, res) => {
     } else {
       return res
         .status(401)
-        .json({ status: false, message: "Invalid email or password" });
+        .json({ status: false, message: "Email hoặc mật khẩu không hợp lệ" });
     }
   } catch (error) {
     console.log(error);
@@ -87,7 +87,7 @@ export const logoutUser = async (req, res) => {
       expires: new Date(0),
     });
 
-    res.status(200).json({ message: "Logout successful" });
+    res.status(200).json({ message: "Đăng xuất thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -146,11 +146,11 @@ export const updateUserProfile = async (req, res) => {
 
       res.status(201).json({
         status: true,
-        message: "Profile Updated Successfully.",
+        message: "Tài khoản update thành công",
         user: updatedUser,
       });
     } else {
-      res.status(404).json({ status: false, message: "User not found" });
+      res.status(404).json({ status: false, message: "Không tìm thấy người dùng" });
     }
   } catch (error) {
     console.log(error);
@@ -178,7 +178,7 @@ export const markNotificationRead = async (req, res) => {
       );
     }
 
-    res.status(201).json({ status: true, message: "Done" });
+    res.status(201).json({ status: true, message: "Xong!!!" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -200,10 +200,10 @@ export const changeUserPassword = async (req, res) => {
 
       res.status(201).json({
         status: true,
-        message: `Password chnaged successfully.`,
+        message: `Đổi mật khẩu thành công`,
       });
     } else {
-      res.status(404).json({ status: false, message: "User not found" });
+      res.status(404).json({ status: false, message: "Không tìm thấy người dùng" });
     }
   } catch (error) {
     console.log(error);
@@ -224,12 +224,12 @@ export const activateUserProfile = async (req, res) => {
 
       res.status(201).json({
         status: true,
-        message: `User account has been ${
-          user?.isActive ? "activated" : "disabled"
+        message: `Tài khoản người dùng đã được ${
+          user?.isActive ? "kích hoạt" : "hủy bỏ"
         }`,
       });
     } else {
-      res.status(404).json({ status: false, message: "User not found" });
+      res.status(404).json({ status: false, message: "Không tìm thấy người dùng" });
     }
   } catch (error) {
     console.log(error);
@@ -245,7 +245,7 @@ export const deleteUserProfile = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "User deleted successfully" });
+      .json({ status: true, message: "Đã xóa tài khoản người dùng thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });

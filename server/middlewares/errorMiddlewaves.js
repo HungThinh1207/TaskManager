@@ -1,5 +1,5 @@
 const routeNotFound = (req, res, next) => {
-  const error = new Error(`Route not found: ${req.originalUrl}`);
+  const error = new Error(`Không tìm thấy bộ định tuyến: ${req.originalUrl}`);
   res.status(404);
   next(error);
 };
@@ -10,7 +10,7 @@ const errorHandler = (err, req, res, next) => {
 
   if (err.name === "CastError" && err.kind === "ObjectId") {
     statusCode = 404;
-    message = "Resource not found";
+    message = "Không tìm thấy tài nguyên";
   }
 
   res.status(statusCode).json({
