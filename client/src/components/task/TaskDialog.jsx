@@ -41,10 +41,9 @@ const TaskDialog = ({ task }) => {
 
   const deleteHandler = async (id) => {
     try {
-      const res = await deleteTask({
-        id: task._id,
-        isTrashed: "trash",
-      }).unwrap()
+      const res = await deleteTask(
+      task._id,
+      ).unwrap()
 
       toast.success(res?.message)
       setTimeout(() => {

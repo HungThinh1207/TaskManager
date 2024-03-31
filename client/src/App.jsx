@@ -14,6 +14,8 @@ import Trash from "./pages/Trash";
 import Users from "./pages/Users";
 import Dashboard from "./pages/dashboard";
 import { setOpenSidebar } from "./redux/slices/authSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Layout() {
   const { user } = useSelector((state) => state.auth);
@@ -95,6 +97,7 @@ const MobileSidebar = () => {
 function App() {
   return (
     <main className='w-full min-h-screen bg-[#f3f4f6] '>
+      <ToastContainer></ToastContainer>
       <Routes>
         <Route element={<Layout />}>
           <Route index path='/' element={<Navigate to='/dashboard' />} />
