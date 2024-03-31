@@ -124,10 +124,10 @@ const UserTable = ({ users }) => {
         <p
           className={clsx(
             "w-fit px-3 py-1 rounded-full text-sm",
-            user?.isActive ?  "bg-yellow-100 " : "bg-blue-200"
+            user?.isActive ? "bg-yellow-100 " : "bg-blue-200"
           )}
         >
-          {user?.isActive ?  "Disabled" : "Active"}
+          {user?.isActive ? "Disabled" : "Active"}
         </p>
       </td>
       <td className='py-2 text-sm'>{moment(user?.createdAt).fromNow()}</td>
@@ -149,14 +149,15 @@ const UserTable = ({ users }) => {
 };
 
 const Dashboard = () => {
+
+  const { data, isLoading } = useGetDashboardStatsQuery()
   
-  const {data, isLoading} = useGetDashboardStatsQuery()
-  if(isLoading)
-  return (
-    <div className='py-10'>
-      <Loading/>
-    </div>
-  )
+  if (isLoading)
+    return (
+      <div className='py-10'>
+        <Loading />
+      </div>
+    )
 
   const totals = data?.tasks;
 
