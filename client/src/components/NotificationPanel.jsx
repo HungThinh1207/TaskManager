@@ -59,11 +59,12 @@ const NotificationPanel = () => {
   const { data, refetch } = useGetNotificationsQuery();
   const [markAsRead] = useMarkNotiAsReadMutation();
 
-  const readHandler = async () => {
-    await markAsRead({type,id}).unwrap();
+  const readHandler = async (type, id) => {
+    await markAsRead({ type, id }).unwrap();
     refetch()
   };
-  const viewHandler = async () => {
+  //console.log(data)
+  const viewHandler = async (el) => {
     setSelected(el)
     readHandler("one", el._id)
     setOpen(true)
@@ -153,7 +154,7 @@ const NotificationPanel = () => {
           </Popover.Panel>
         </Transition>
       </Popover>
-      <ViewNotification open = {open} setOpen = {setOpen} el ={selected}/>
+      <ViewNotification open={open} setOpen={setOpen} el={selected} />
     </>
   );
 };

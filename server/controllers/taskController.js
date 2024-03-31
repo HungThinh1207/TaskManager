@@ -58,7 +58,7 @@ export const duplicateTask = async (req, res) => {
 
     const newTask = await Task.create({
       ...task,
-      title: task.title + " - sao chép",
+      title: task.title + " - Task nhân bản",
     });
 
     newTask.team = task.team;
@@ -267,8 +267,7 @@ export const createSubTask = async (req, res) => {
 
     await task.save();
 
-    res.status(200).js;
-    on({ status: true, message: "Nhiệm vụ phụ thêm thành công" });
+    res.status(200).json({ status: true, message: "Nhiệm vụ phụ thêm thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -293,7 +292,7 @@ export const updateTask = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "Nhân đôi nhiệm vụ thành công" });
+      .json({ status: true, message: "Chỉnh sửa nhiệm vụ thành công" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
