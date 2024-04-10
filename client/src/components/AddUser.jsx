@@ -23,8 +23,8 @@ const AddUser = ({ open, setOpen, userData }) => {
   } = useForm({ defaultValues });
 
   const dispatch = useDispatch()
-  const [addNewUser, {isLoading}] = useRegisterMutation()
-  const [updateUser, {isLoading : isUpdating}] = useUpdateUserMutation()
+  const [addNewUser, { isLoading }] = useRegisterMutation()
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation()
 
   const handleOnSubmit = async (data) => {
     try {
@@ -32,15 +32,15 @@ const AddUser = ({ open, setOpen, userData }) => {
         const result = await updateUser(data).unwrap()
         toast.success("Hồ sơ được cập nhật thành công")
 
-        if(userData?._id === user>_id){
-          dispatch(setCredentials({...result.user}))
+        if (userData?._id === user > _id) {
+          dispatch(setCredentials({ ...result.user }))
         }
 
       } else {
-        await addNewUser({...data, password: data.email}).unwrap();
+        await addNewUser({ ...data, password: data?.password }).unwrap();
         toast.success("Người dùng mới được thêm thành công")
       }
-      setTimeout(()=>{
+      setTimeout(() => {
         setOpen(false)
       }, 500)
     } catch (error) {
@@ -92,6 +92,20 @@ const AddUser = ({ open, setOpen, userData }) => {
               })}
               error={errors.email ? errors.email.message : ""}
             />
+
+            <Textbox
+              placeholder='password'
+              type='text'
+              name='password'
+              label='Password'
+              className='w-full rounded'
+              register={register("password", {
+                required: "User password is required!",
+              })}
+              error={errors.password ? errors.password.message : ""}
+            />
+
+            
 
             <Textbox
               placeholder='Role'
