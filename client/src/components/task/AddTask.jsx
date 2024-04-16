@@ -24,6 +24,7 @@ const AddTask = ({ open, setOpen, task }) => {
   const defaultValues = {
     title: task?.title || "",
     date: dateFormatter(task?.date || new Date()),
+    endDate: dateFormatter(task?.endDate || new Date()),
     team: [],
     stage: "",
     priority: "",
@@ -161,6 +162,20 @@ const AddTask = ({ open, setOpen, task }) => {
                     required: "Date is required!",
                   })}
                   error={errors.date ? errors.date.message : ""}
+                />
+              </div>
+
+              <div className='w-full'>
+                <Textbox
+                  placeholder='Date'
+                  type='date'
+                  name='endDate'
+                  label='End Date'
+                  className='w-full rounded'
+                  register={register("endDate", {
+                    required: "End date is required!",
+                  })}
+                  error={errors.endDate ? errors.endDate.message : ""}
                 />
               </div>
             </div>

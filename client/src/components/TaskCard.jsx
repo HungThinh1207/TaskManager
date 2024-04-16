@@ -49,11 +49,17 @@ const TaskCard = ({ task }) => {
             />
             <h4 className='line-clamp-1 text-black'>{task?.title}</h4>
           </div>
+          <div className='w-full border-t border-gray-200 my-2' />
           <span className='text-sm text-gray-600'>
+            Start date:
             {formatDate(new Date(task?.date))}
           </span>
         </>
-
+        <div className='w-full border-t border-gray-200 my-2' />
+        <span className='text-sm text-gray-600'>
+          End date:
+          {formatDate(new Date(task?.endDate))}
+        </span>
         <div className='w-full border-t border-gray-200 my-2' />
         <div className='flex items-center justify-between mb-2'>
           <div className='flex items-center gap-3'>

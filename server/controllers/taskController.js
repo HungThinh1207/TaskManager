@@ -6,7 +6,7 @@ export const createTask = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const { title, team, stage, date, priority, assets } = req.body;
+    const { title, team, stage, date, endDate, priority, assets } = req.body;
 
     let text = "Nhiệm vụ mới đã được giao cho bạn";
     if (team?.length > 1) {
@@ -30,6 +30,7 @@ export const createTask = async (req, res) => {
       team,
       stage: stage.toLowerCase(),
       date,
+      endDate,
       priority: priority.toLowerCase(),
       assets,
       activities: activity,
@@ -77,8 +78,7 @@ export const duplicateTask = async (req, res) => {
 
     text =
       text +
-      ` Ưu tiên nhiệm vụ được đặt là ${
-        task.priority
+      ` Ưu tiên nhiệm vụ được đặt là ${task.priority
       } vì vậy hãy kiểm tra và hành động phù hợp. Ngày nhiệm vụ là ${task.date.toDateString()}.!!!`;
 
     await Notice.create({
@@ -129,22 +129,22 @@ export const dashboardStatistics = async (req, res) => {
 
     const allTasks = isAdmin
       ? await Task.find({
-          isTrashed: false,
+        isTrashed: false,
+      })
+        .populate({
+          path: "team",
+          select: "name role title email",
         })
-          .populate({
-            path: "team",
-            select: "name role title email",
-          })
-          .sort({ _id: -1 })
+        .sort({ _id: -1 })
       : await Task.find({
-          isTrashed: false,
-          team: { $all: [userId] },
+        isTrashed: false,
+        team: { $all: [userId] },
+      })
+        .populate({
+          path: "team",
+          select: "name role title email",
         })
-          .populate({
-            path: "team",
-            select: "name role title email",
-          })
-          .sort({ _id: -1 });
+        .sort({ _id: -1 });
 
     const users = await User.find({ isActive: true })
       .select("name title role isAdmin createdAt")
@@ -277,12 +277,13 @@ export const createSubTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, date, team, stage, priority, assets } = req.body;
+    const { title, date,endDate, team, stage, priority, assets } = req.body;
 
     const task = await Task.findById(id);
 
     task.title = title;
     task.date = date;
+    task.endDate = endDate;
     task.priority = priority.toLowerCase();
     task.assets = assets;
     task.stage = stage.toLowerCase();
