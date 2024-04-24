@@ -25,8 +25,6 @@ const Login = () => {
 
       dispatch(setCredentials(result));
       navigate("/");// tro den home
-
-      console.log(result)
     } catch (error) {
       toast.error(error?.data?.message || error.message)
     }

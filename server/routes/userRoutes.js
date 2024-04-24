@@ -11,6 +11,7 @@ import {
   markNotificationRead,
   registerUser,
   updateUserProfile,
+  getUsersForSidebar,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -21,6 +22,7 @@ router.post("/logout", logoutUser);
 
 router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);
+router.get("/team-sidebar", protectRoute, getUsersForSidebar)
 
 router.put("/profile", protectRoute, updateUserProfile);
 router.put("/read-noti", protectRoute, markNotificationRead);

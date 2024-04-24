@@ -11,6 +11,8 @@ const userSchema = new Schema(
     isAdmin: { type: Boolean, required: true, default: false },
     tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
     isActive: { type: Boolean, required: true, default: true },
+    // gender: { type: String, required: true, enum: ["male", "female"] },
+    profilePic: { type: String, default: "" },
   },
   { timestamps: true }
 );

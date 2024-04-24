@@ -130,8 +130,8 @@ export const updateUserProfile = async (req, res) => {
       isAdmin && userId === _id
         ? userId
         : isAdmin && userId !== _id
-        ? _id
-        : userId;
+          ? _id
+          : userId;
 
     const user = await User.findById(id);
 
@@ -224,9 +224,8 @@ export const activateUserProfile = async (req, res) => {
 
       res.status(201).json({
         status: true,
-        message: `Tài khoản người dùng đã được ${
-          user?.isActive ? "kích hoạt" : "hủy bỏ"
-        }`,
+        message: `Tài khoản người dùng đã được ${user?.isActive ? "kích hoạt" : "hủy bỏ"
+          }`,
       });
     } else {
       res.status(404).json({ status: false, message: "Không tìm thấy người dùng" });
@@ -246,6 +245,18 @@ export const deleteUserProfile = async (req, res) => {
     res
       .status(200)
       .json({ status: true, message: "Đã xóa tài khoản người dùng thành công" });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, message: error.message });
+  };
+};
+
+export const getUsersForSidebar = async (req, res) => {
+  try {
+
+    const loggedInUserId = req.user._id;
+    const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
+    res.status(200).json(filteredUsers)
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });

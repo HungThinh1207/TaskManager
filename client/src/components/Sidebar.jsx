@@ -6,7 +6,7 @@ import {
   MdSettings,
   MdTaskAlt,
 } from "react-icons/md";
-import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
+import { FaRocketchat, FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setOpenSidebar } from "../redux/slices/authSlice";
@@ -39,6 +39,11 @@ const linkData = [
     icon: <MdOutlinePendingActions />,
   },
   {
+    label: "Chat",
+    link: "chat",
+    icon: <FaRocketchat />,
+  },
+  {
     label: "Team",
     link: "team",
     icon: <FaUsers />,
@@ -58,7 +63,7 @@ const Sidebar = () => {
 
   const path = location.pathname.split("/")[1];
 
-  const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
+  const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 6);
 
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));
@@ -94,12 +99,12 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <div className=''>
+      {/* <div className=''>
         <button className='w-full flex gap-2 p-2 items-center text-lg text-gray-800'>
           <MdSettings />
           <span>Settings</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
