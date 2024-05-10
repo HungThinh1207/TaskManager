@@ -5,31 +5,31 @@ import Message from "./Message.jsx";
 import useListenMessages from "../../hooksChat/ListenMessage.js";
 
 const Messages = () => {
-	const { messages, loading } = useGetMessages();
-	useListenMessages();
-	const lastMessageRef = useRef();
+  const { messages, loading } = useGetMessages();
+  useListenMessages();
+  const lastMessageRef = useRef();
 
-	useEffect(() => {
-		setTimeout(() => {
-			lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-		}, 100);
-	}, [messages]);
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messages]);
 
-	return (
-		<div className='px-4 flex-1 overflow-auto'>
-			{!loading &&
-				messages.length > 0 &&
-				Object.keys(messages).map((key) => (
-					<div key={key} ref={lastMessageRef}>
-						<Message message={messages[key]} />
-					</div>
-				))}
+  return (
+    <div className="px-4 flex-1 overflow-auto bg-white">
+      {!loading &&
+        messages.length > 0 &&
+        Object.keys(messages).map((key) => (
+          <div key={key} ref={lastMessageRef}>
+            <Message message={messages[key]} />
+          </div>
+        ))}
 
-			{!loading && messages.length === 0 && (
-				<p className='text-center'>Gửi tin nhắn để bắt đầu cuộc trò chuyện</p>
-			)}
-		</div>
-	);
+      {!loading && messages.length === 0 && (
+        <p className="text-center">Gửi tin nhắn để bắt đầu cuộc trò chuyện</p>
+      )}
+    </div>
+  );
 };
 
 export default Messages;
