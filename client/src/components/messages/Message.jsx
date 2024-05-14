@@ -23,7 +23,7 @@ const Message = ({ message }) => {
       className={`chat ${chatClassName} flex items-center gap-2	 ${justifyContentClass} ${textColor}`}
     >
       <div className="chat-image avatar">
-        <div className="w-9 rounded-full">
+        <div className="w-9 rounded-full ">
           <img
             alt=""
             src={
