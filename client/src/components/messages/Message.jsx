@@ -20,7 +20,7 @@ const Message = ({ message }) => {
 
   return (
     <div
-      className={`chat ${chatClassName} flex items-center gap-2	 ${justifyContentClass} ${textColor}`}
+      className={`chat ${chatClassName} flex items-center gap-2 mb-0.5	 ${justifyContentClass} ${textColor}`}
     >
       <div className="chat-image avatar">
         <div className="w-9 rounded-full ">
@@ -38,7 +38,7 @@ const Message = ({ message }) => {
       >
         {message.message}
       </div>
-      <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">
+      <div className="chat-footer opacity-50 text-xs flex gap-1 items-center text-black">
         {formattedTime}
       </div>
     </div>

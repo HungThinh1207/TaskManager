@@ -35,7 +35,7 @@ function Layout() {
       <div className="flex-1 overflow-y-auto">
         <Navbar />
 
-        <div className="p-4 2xl:px-100">
+        <div className="pt-4 pl-4 pb-4 2xl:px-100">
           <Outlet />
         </div>
       </div>

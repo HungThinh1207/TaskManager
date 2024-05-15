@@ -20,8 +20,7 @@ const MessageContainer = () => {
       ) : (
         <>
           {/* Header */}
-          <div className="bg-slate-500 px-4 py-2 mb-2">
-            <span className="label-text">To:</span>{" "}
+          <div className="bg-white px-4 py-4 mb-2 border-b border-gray-300	">
             <span className="text-gray-900 font-bold">
               {selectedConversation?.name}
             </span>
@@ -39,10 +38,12 @@ const NoChatSelected = () => {
   const { authUser } = useAuthContext();
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <div className="px-4 text-center sm:text-lg md:text-xl text-gray-900 font-semibold flex flex-col items-center gap-2">
-        <p>Xin chào 👋 {authUser.name} ❄</p>
-        <p>Chọn một cuộc trò chuyện để bắt đầu nhắn tin</p>
-        <TiMessages className="text-3xl md:text-6xl text-center" />
+      <div className="px-4 text-center sm:text-lg md:text-2xl text-blue-600 font-mono flex flex-col items-center gap-2">
+        <p className="">
+          <div className="text-7xl font-black	text-blue-700">WELCOME 👋</div>
+          <br /> <div className="font-extrabold text-3xl">{authUser.name}</div>
+        </p>
+        <p>Chọn một cuộc trò chuyện để bắt đầu nhắn tin...</p>
       </div>
     </div>
   );

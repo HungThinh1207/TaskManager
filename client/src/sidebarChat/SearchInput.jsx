@@ -26,17 +26,20 @@ const SearchInput = () => {
     } else toast.error("Không tìm thấy người dùng");
   };
   return (
-    <form onSubmit={handleSubmit} className="flex items-center ">
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center flex-row-reverse justify-end"
+    >
       <input
         type="text"
         placeholder="Search…"
-        className=""
+        className="bg-gray-200 rounded-r-lg pl-1 py-2 pr-20"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button type="submit" className="btn btn-circle">
-        <IoSearchSharp className="w-6 h-6 outline-none" />
-      </button>
+      <div type="submit" className="btn btn-circle">
+        <IoSearchSharp className="w-6 h-10 outline-none rounded-l-lg bg-gray-200 pl-2" />
+      </div>
     </form>
   );
 };
