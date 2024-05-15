@@ -39,7 +39,7 @@ const NotificationPanel = () => {
   const callsToAction = [
     { name: "Cancel", href: "#", icon: "" },
     {
-      name: "Mark All Read",
+      name: "Đánh dấu đã đọc",
       href: "#",
       icon: "",
       onClick: () => readHandler("all", ""),

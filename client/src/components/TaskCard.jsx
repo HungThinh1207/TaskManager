@@ -50,14 +50,22 @@ const TaskCard = ({ task }) => {
             <h4 className='line-clamp-1 text-black'>{task?.title}</h4>
           </div>
           <div className='w-full border-t border-gray-200 my-2' />
+
+          {/* còn phải render ra name project */}
           <span className='text-sm text-gray-600'>
-            Start date:
+            <span className="text-red-400 ">Name project: </span>
+            {task.projectId}
+          </span>
+          <div className='w-full border-t border-gray-200 my-2' />
+
+          <span className='text-sm text-gray-600'>
+            <span>Start date:  </span>
             {formatDate(new Date(task?.date))}
           </span>
         </>
         <div className='w-full border-t border-gray-200 my-2' />
         <span className='text-sm text-gray-600'>
-          End date:
+          <span>End date: </span>
           {formatDate(new Date(task?.endDate))}
         </span>
         <div className='w-full border-t border-gray-200 my-2' />
@@ -116,7 +124,7 @@ const TaskCard = ({ task }) => {
           </>
         )}
 
-        <div className='w-full pb-2'>
+        <div className='w-full pb-2 mx-auto hover:bg-green-200'>
           <button
             onClick={() => setOpen(true)}
             disabled={user.isAdmin ? false : true}

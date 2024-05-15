@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const taskSchema = new Schema(
   {
+    projectId: { type: Schema.Types.ObjectId, ref: 'Project', require: true },
     title: { type: String, required: true },
     date: { type: Date, default: new Date() },
     endDate: { type: Date, default: new Date() },

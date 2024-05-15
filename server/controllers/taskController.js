@@ -1,4 +1,5 @@
 import Notice from "../models/notification.js";
+import Project from "../models/project.js";
 import Task from "../models/task.js";
 import User from "../models/user.js";
 
@@ -6,7 +7,7 @@ export const createTask = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const { title, team, stage, date, endDate, priority, assets } = req.body;
+    const { title, team, projectId, stage, date, endDate, priority, assets } = req.body;
 
     let text = "Nhiệm vụ mới đã được giao cho bạn";
     if (team?.length > 1) {
@@ -25,16 +26,30 @@ export const createTask = async (req, res) => {
       by: userId,
     };
 
+    //let project = await Project.findOne({
+    //tasks: { $all: [title, team, stage, date, endDate, priority, assets] },
+    //})
+
+    // if (!project) {
+    //   console.log("ko co task nao ton tai")
+    // }
+
     const task = await Task.create({
       title,
       team,
       stage: stage.toLowerCase(),
       date,
       endDate,
+      projectId,
       priority: priority.toLowerCase(),
       assets,
       activities: activity,
     });
+
+    //day task vao project
+    const project = await Project.findOne({ _id: projectId });
+    project.tasks.push(task);
+    await project.save();
 
     await Notice.create({
       team,
@@ -62,6 +77,7 @@ export const duplicateTask = async (req, res) => {
       title: task.title + " - Task nhân bản",
     });
 
+    newTask.projectId = task.projectId;
     newTask.team = task.team;
     newTask.subTasks = task.subTasks;
     newTask.assets = task.assets;
@@ -226,6 +242,34 @@ export const getTasks = async (req, res) => {
   }
 };
 
+//can phai xu li them cac dieu kien de hien thi ra task
+export const getProjectTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      // Kiểm tra xem 'id' có phải là một ObjectId hợp lệ của MongoDB không
+      return res.status(400).json({ status: false, message: "ID project không hợp lệ" });
+    }
+
+    const project = await Project.findById(id).populate("tasks");
+
+    if (!project) {
+      return res.status(404).json({ status: false, message: `Không tìm thấy project với ID: ${id}` });
+    }
+
+    const tasks = project.tasks;
+    res.status(200).json({
+      status: true,
+      tasks,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ status: false, message: "Lỗi server khi lấy tasks" });
+  }
+};
+
+
 export const getTask = async (req, res) => {
   try {
     const { id } = req.params;
@@ -277,10 +321,12 @@ export const createSubTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, date,endDate, team, stage, priority, assets } = req.body;
+    const { projectId, title, date, endDate, team, stage, priority, assets } = req.body;
 
     const task = await Task.findById(id);
 
+    //thieu doi project
+    task.projectId = projectId;
     task.title = title;
     task.date = date;
     task.endDate = endDate;

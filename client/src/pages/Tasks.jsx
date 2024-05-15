@@ -13,6 +13,8 @@ import { tasks } from "../assets/data";
 import Table from "../components/task/Table";
 import AddTask from "../components/task/AddTask";
 import { useGetAllTasksQuery } from "../redux/slices/api/taskApiSlice";
+import { useGetTaskProjectQuery } from "../redux/slices/api/taskApiSlice";
+import SelectProject from "../components/task/SelectProject";
 
 const TABS = [
   { title: "Board View", icon: <MdGridView /> },
@@ -28,16 +30,25 @@ const TASK_TYPE = {
 const Tasks = () => {
   const params = useParams();
 
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
 
   const status = params?.status || "";
 
-  const {data,isLoading} = useGetAllTasksQuery({
+  const { data: allTasksData, isLoading: isAllTasksLoading } = useGetAllTasksQuery({
     strQuery: status,
     isTrashed: "",
     search: "",
-  }) //ham lay task
+  });
+
+  const { data: projectTasksData, isLoading: isProjectTasksLoading } = useGetTaskProjectQuery(selectedProject || undefined);
+
+  // Sử dụng dữ liệu từ query phù hợp dựa trên selectedProject
+  const tasksData = selectedProject ? projectTasksData : allTasksData;
+  const isLoading = selectedProject ? isProjectTasksLoading : isAllTasksLoading;
+
 
   return isLoading ? (
     <div className='py-10'>
@@ -45,6 +56,7 @@ const Tasks = () => {
     </div>
   ) : (
     <div className='w-full'>
+      <SelectProject onProjectSelect={setSelectedProject} />
       <div className='flex items-center justify-between mb-4'>
         <Title title={status ? `${status} Tasks` : "Tasks"} />
 
@@ -71,10 +83,10 @@ const Tasks = () => {
         )}
 
         {selected !== 1 ? (
-          <BoardView tasks={data?.tasks} />
+          <BoardView tasks={tasksData?.tasks} />
         ) : (
           <div className='w-full'>
-            <Table tasks={data?.tasks} />
+            <Table tasks={tasksData?.tasks} />
           </div>
         )}
       </Tabs>

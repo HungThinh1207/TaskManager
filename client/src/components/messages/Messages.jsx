@@ -16,17 +16,21 @@ const Messages = () => {
 	}, [messages]);
 
 	return (
-		<div className='px-4 flex-1 overflow-auto'>
-			{!loading &&
-				messages.length > 0 &&
-				Object.keys(messages).map((key) => (
-					<div key={key} ref={lastMessageRef}>
-						<Message message={messages[key]} />
+		<div className='flex-1 overflow-auto bg-white p-4 space-y-4'>
+			{loading ? (
+				<MessageSkeleton />
+			) : (
+				messages.length > 0 ? (
+					Object.keys(messages).map((key) => (
+						<div key={key} ref={lastMessageRef}>
+							<Message message={messages[key]} />
+						</div>
+					))
+				) : (
+					<div className='flex items-center justify-center h-full'>
+						<p className='text-gray-800'>Gửi tin nhắn để bắt đầu cuộc trò chuyện</p>
 					</div>
-				))}
-
-			{!loading && messages.length === 0 && (
-				<p className='text-center'>Gửi tin nhắn để bắt đầu cuộc trò chuyện</p>
+				)
 			)}
 		</div>
 	);

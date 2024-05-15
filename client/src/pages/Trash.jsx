@@ -82,13 +82,13 @@ const Trash = () => {
 
   const deleteAllClick = () => {
     setType("deleteAll");
-    setMsg("Do you want to permenantly delete all items?");
+    setMsg("Bạn có muốn xóa vĩnh viễn tất cả các mục không?");
     setOpenDialog(true);
   };
 
   const restoreAllClick = () => {
     setType("restoreAll");
-    setMsg("Do you want to restore all items in the trash?");
+    setMsg("Bạn có muốn khôi phục tất cả các mục trong thùng rác không?");
     setOpenDialog(true);
   };
 
@@ -101,7 +101,7 @@ const Trash = () => {
   const restoreClick = (id) => {
     setSelected(id);
     setType("restore");
-    setMsg("Do you want to restore the selected item?");
+    setMsg("Bạn có muốn khôi phục mục đã chọn không?");
     setOpenDialog(true);
   };
 

@@ -17,7 +17,7 @@ import { setOpenSidebar } from "./redux/slices/authSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ChatPage from "./pages/chatPage";
-//import Conversations from "./hooksChat/GetConversations";
+import Project from "./pages/Project";
 
 function Layout() {
   const { user } = useSelector((state) => state.auth);
@@ -112,6 +112,7 @@ function App() {
           <Route path='/trashed' element={<Trash />} />
           <Route path='/task/:id' element={<TaskDetails />} />
           <Route path='/chat' element={<ChatPage />} />
+          <Route path='/project' element={<Project/>}/>
         </Route>
 
         <Route path='/log-in' element={<Login />} />

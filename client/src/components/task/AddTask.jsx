@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
+import { Dialog, Listbox } from "@headlessui/react";
 import Textbox from "../Textbox";
 import { useForm } from "react-hook-form";
 import UserList from "./UserList";
@@ -13,6 +13,8 @@ import { app } from "../../utils/firebase";
 import { useCreateTaskMutation, useUpdateTaskMutation } from "../../redux/slices/api/taskApiSlice";
 import { toast } from "sonner";
 import { dateFormatter } from "../../utils";
+import ProjectList from "./ProjectList"
+
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
@@ -26,6 +28,7 @@ const AddTask = ({ open, setOpen, task }) => {
     date: dateFormatter(task?.date || new Date()),
     endDate: dateFormatter(task?.endDate || new Date()),
     team: [],
+    projectId: task?.projectId || {},
     stage: "",
     priority: "",
     assets: [],
@@ -37,6 +40,7 @@ const AddTask = ({ open, setOpen, task }) => {
     formState: { errors },
   } = useForm({ defaultValues });
   const [team, setTeam] = useState(task?.team || []);
+  const [projectId, setProjectId] = useState(task?.projectId);
   const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
   const [priority, setPriority] = useState(
     task?.priority?.toUpperCase() || PRIORIRY[2]
@@ -46,6 +50,7 @@ const AddTask = ({ open, setOpen, task }) => {
 
   const [createTask, { isLoading }] = useCreateTaskMutation()
   const [updateTask, { isLoading: isUpdating }] = useUpdateTaskMutation()
+
   const URLS = task?.assets ? [...task.assets] : []
 
 
@@ -65,6 +70,7 @@ const AddTask = ({ open, setOpen, task }) => {
     try {
       const newData = {
         ...data,
+        projectId,
         assets: [...URLS, ...uploadedFileURLs],
         team,
         stage,
@@ -140,6 +146,7 @@ const AddTask = ({ open, setOpen, task }) => {
               register={register("title", { required: "Title is required" })}
               error={errors.title ? errors.title.message : ""}
             />
+            <ProjectList setProjectId={setProjectId} projectId={projectId} />
 
             <UserList setTeam={setTeam} team={team} />
 

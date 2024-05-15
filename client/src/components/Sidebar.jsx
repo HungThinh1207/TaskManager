@@ -6,7 +6,7 @@ import {
   MdSettings,
   MdTaskAlt,
 } from "react-icons/md";
-import { FaRocketchat, FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
+import { FaProjectDiagram, FaRocketchat, FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setOpenSidebar } from "../redux/slices/authSlice";
@@ -42,6 +42,11 @@ const linkData = [
     label: "Chat",
     link: "chat",
     icon: <FaRocketchat />,
+  },
+  {
+    label: "Project",
+    link: "project",
+    icon: <FaProjectDiagram />,
   },
   {
     label: "Team",

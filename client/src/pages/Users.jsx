@@ -17,6 +17,7 @@ const Users = () => {
   const [selected, setSelected] = useState(null);
 
   const {data, isLoading, refetch} = useGetTeamListQuery()
+  console.log(data)
   
   const [deleteUser] = useDeleteUserMutation()
   const [userAction] = useUserActionMutation()

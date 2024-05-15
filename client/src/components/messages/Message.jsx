@@ -7,21 +7,23 @@ const Message = ({ message }) => {
 	const { selectedConversation } = useConversation();
 	const fromMe = message.senderId === authUser._id;
 	const formattedTime = extractTime(message.createdAt);
-	const chatClassName = fromMe ? "chat-end" : "chat-start";
-	const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
-	const bubbleBgColor = fromMe ? "bg-blue-500" : "";
 
-	const shakeClass = message.shouldShake ? "shake" : "";
+	// Cập nhật class để xác định vị trí của avatar
+	const chatClassName = fromMe ? "flex-row-reverse" : "flex-row";
+	const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
+	const bubbleBgColor = fromMe ? "bg-blue-600" : "bg-gray-200";
+	const textColor = fromMe ? "text-white" : "text-gray-800";
+	const shakeClass = message.shouldShake ? "animate-shake" : "";
 
 	return (
-		<div className={`chat ${chatClassName}`}>
+		<div className={`flex ${chatClassName} items-end p-2`}>
 			<div className='chat-image avatar'>
-				<div className='w-10 rounded-full '>
-					<img alt='' src={profilePic || "https://yt3.ggpht.com/xukNZ7OMGIyK8fLNxAwR-uy214xfaZph7btgo5-HpBbT0o8tZuJ38LBkSI_UcQWYklg4P-tZvQ=s88-c-k-c0x00ffffff-no-rj"} />
-				</div>
+				<img className='w-10 h-10 rounded-full' alt='' src={profilePic || "https://mega.com.vn/media/news/0206_hinh-nen-messi-pc44.jpg"} />
 			</div>
-			<div className={`chat-bubble text-black ${bubbleBgColor} ${shakeClass} pb-2 border-solid border-2 border-black`}>{message.message}</div>
-			<div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
+			<div className={`rounded-lg px-4 py-2 ${bubbleBgColor} ${textColor} ${shakeClass} shadow`}>
+				{message.message}
+			</div>
+			<span className='text-xs text-gray-500'>{formattedTime}</span>
 		</div>
 	);
 };

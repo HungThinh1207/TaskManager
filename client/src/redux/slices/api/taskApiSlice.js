@@ -1,6 +1,6 @@
 import { apiSlice } from "../apiSlice"
-
 const TASK_URL = "/task"
+
 export const taskApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getDashboardStats: builder.query({
@@ -10,9 +10,17 @@ export const taskApiSlice = apiSlice.injectEndpoints({
                 credentials: "include",
             }),
         }),
+        //còn phần get project task
         getAllTasks: builder.query({
             query: ({ strQuery, isTrashed, search }) => ({
                 url: `${TASK_URL}?stage=${strQuery}&isTrashed=${isTrashed}&search=${search}`,
+                method: "GET",
+                credentials: "include",
+            }),
+        }),
+        getTaskProject: builder.query({
+            query: (id) => ({
+                url: `${TASK_URL}/project-task/${id}`,
                 method: "GET",
                 credentials: "include",
             }),
@@ -85,6 +93,7 @@ export const taskApiSlice = apiSlice.injectEndpoints({
 
 export const { useGetDashboardStatsQuery,
     useGetAllTasksQuery,
+    useGetTaskProjectQuery,
     useCreateTaskMutation,
     useDuplicateTaskMutation,
     useUpdateTaskMutation,

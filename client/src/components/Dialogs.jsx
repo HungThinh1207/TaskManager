@@ -37,7 +37,7 @@ export default function ConfirmatioDialog({
           </Dialog.Title>
 
           <p className='text-center text-gray-500'>
-            {msg ?? "Are you sure you want to delete the selected record?"}
+            {msg ?? "Bạn có chắc chắn muốn xóa mục đã chọn không?"}
           </p>
 
           <div className='bg-gray-50 py-3 sm:flex sm:flex-row-reverse gap-4'>
@@ -82,7 +82,7 @@ export function UserAction({ open, setOpen, onClick = () => {} }) {
           </Dialog.Title>
 
           <p className='text-center text-gray-500'>
-            {"Are you sure you want to activate or deactive this account?"}
+            {"Bạn có chắc chắn muốn kích hoạt hoặc hủy kích hoạt tài khoản này không?"}
           </p>
 
           <div className='bg-gray-50 py-3 sm:flex sm:flex-row-reverse gap-4'>
