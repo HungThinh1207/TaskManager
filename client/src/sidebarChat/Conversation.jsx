@@ -18,7 +18,7 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
 			>
 				<div className={`avatar ${isOnline ? "online" : ""}`}>
 					<div className='w-12 rounded-full'>
-						<img src={conversation.profilePic || "https://yt3.ggpht.com/_h_p-OVRpbr9NzhfQNwIygLtbcHcwTUXqyc09L_OO6T0f1H9hH5MFOxLb4otU5C9uqNuhvv3NLk=s88-c-k-c0x00ffffff-no-rj"} alt='user avatar' />
+						<img src={conversation.profilePic || "https://mega.com.vn/media/news/0206_hinh-nen-messi-pc44.jpg"} alt='user avatar' />
 					</div>
 				</div>
 

@@ -9,6 +9,7 @@ const SelectProject = ({ onProjectSelect }) => {
     // Lấy giá trị id từ sự kiện onChange
     setSelectedProject(e);
     onProjectSelect(e);
+    console.log(e)
   };
 
   // const handleFindTasks = () => {
@@ -28,7 +29,7 @@ const SelectProject = ({ onProjectSelect }) => {
         className="w-[500px] h-12 text-base border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         onChange={(e) => handleProjectSelect(e.target.value)} value={selectedProject}
       >
-        <option value="">Chọn một dự án...</option>
+        <option value="">Tổng dự án</option>
         {data?.map((project) => (
           <option key={project._id} value={project._id}>
             {project.name}

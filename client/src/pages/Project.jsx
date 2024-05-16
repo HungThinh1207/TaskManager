@@ -67,6 +67,7 @@ const Project = () => {
                 <th className='py-2'>Name Project</th>
                 <th className='py-2'>Start date</th>
                 <th className='py-2'>End Date</th>
+                <th className='py-2'>Total tasks</th>
             </tr>
         </thead>
     );
@@ -84,8 +85,17 @@ const Project = () => {
                 </div>
             </td>
 
-            <td className='p-2'>{moment(project.date).format('DD/MM/YYYY')}</td>
-            <td className='p-2'>{moment(project.endDate).format('DD/MM/YYYY')}</td>
+            <td className='p-0'>{moment(project.date).format('DD/MM/YYYY')}</td>
+            <td className='p-0'>{moment(project.endDate).format('DD/MM/YYYY')}</td>
+            <td className='p-8 '>
+                <span className={clsx('font-semibold', {
+                    'text-black': project.tasks?.length > 0,
+                    'text-red-500': project.tasks?.length === 0,
+                })}>
+                    {project.tasks?.length > 0 ? project.tasks.length : 0}
+                </span>
+            </td>
+
 
             <td className='p-2 flex gap-4 justify-end'>
                 <Button

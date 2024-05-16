@@ -44,7 +44,7 @@ const AddUser = ({ open, setOpen, userData }) => {
         setOpen(false)
       }, 500)
     } catch (error) {
-      toast.error("Đã xảy ra lỗi")
+      // toast.error("Đã xảy ra lỗi")
     }
   };
 
@@ -70,6 +70,15 @@ const AddUser = ({ open, setOpen, userData }) => {
               })}
               error={errors.name ? errors.name.message : ""}
             />
+            {/* <Textbox
+              placeholder='Profile Picture URL'
+              type='text'
+              name='profilePic'
+              label='Profile Picture'
+              className='w-full rounded'
+              register={register("profilePic")}
+              error={errors.profilePic ? errors.profilePic.message : ""}
+            /> */}
             <Textbox
               placeholder='Title'
               type='text'
@@ -105,7 +114,7 @@ const AddUser = ({ open, setOpen, userData }) => {
               error={errors.password ? errors.password.message : ""}
             />
 
-            
+
 
             <Textbox
               placeholder='Role'
