@@ -406,15 +406,69 @@ export const trashTask = async (req, res) => {
   }
 };
 
+// export const deleteRestoreTask = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { actionType } = req.query;
+
+//     if (actionType === "delete") {
+//       await Task.findByIdAndDelete(id);
+//     } else if (actionType === "deleteAll") {
+//       await Task.deleteMany({ isTrashed: true });
+//     } else if (actionType === "restore") {
+//       const resp = await Task.findById(id);
+
+//       resp.isTrashed = false;
+//       resp.save();
+//     } else if (actionType === "restoreAll") {
+//       await Task.updateMany(
+//         { isTrashed: true },
+//         { $set: { isTrashed: false } }
+//       );
+//     }
+
+//     res.status(200).json({
+//       status: true,
+//       message: `Thao tác được thực hiện thành công`,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(400).json({ status: false, message: error.message });
+//   }
+// };
 export const deleteRestoreTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { actionType } = req.query;
 
     if (actionType === "delete") {
-      await Task.findByIdAndDelete(id);
+      // Tìm task cần xóa
+      const deletedTask = await Task.findByIdAndDelete(id);
+
+      // Nếu task tồn tại, thực hiện xóa id của task khỏi danh sách tasks của project
+      if (deletedTask) {
+        const projectId = deletedTask.projectId;
+        const project = await Project.findById(projectId);
+
+        if (project) {
+          project.tasks.pull(id); // Xóa id của task khỏi danh sách tasks
+          await project.save();
+        }
+      }
     } else if (actionType === "deleteAll") {
-      await Task.deleteMany({ isTrashed: true });
+      // Tìm tất cả các task cần xóa
+      const deletedTasks = await Task.deleteMany({ isTrashed: true });
+
+      // Duyệt qua từng task và xóa id của task khỏi danh sách tasks của project
+      for (const deletedTask of deletedTasks) {
+        const projectId = deletedTask.projectId;
+        const project = await Project.findById(projectId);
+
+        if (project) {
+          project.tasks.pull(deletedTask._id);
+          await project.save();
+        }
+      }
     } else if (actionType === "restore") {
       const resp = await Task.findById(id);
 
@@ -436,3 +490,4 @@ export const deleteRestoreTask = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
+

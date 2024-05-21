@@ -1,6 +1,7 @@
 //import Task from "../models/task";
 //import User from "../models/user";
 import Project from "../models/project.js";
+import Task from "../models/task.js";
 
 export const createProject = async (req, res) => {
     try {
@@ -77,15 +78,39 @@ export const updateProject = async (req, res) => {
     }
 }
 
+// export const deleteProject = async (req, res) => {
+//     try {
+
+//         const { id } = req.params;
+//         await Project.findByIdAndDelete(id);
+
+//         res.status(200).json({
+//             status: true,
+//             message: `Xóa dự án được thực hiện thành công`,
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(400).json({ status: false, message: error.message });
+//     }
+// }
 export const deleteProject = async (req, res) => {
     try {
-
         const { id } = req.params;
+
+        // Truy vấn danh sách các task liên quan đến project
+        const tasks = await Task.find({ projectId: id });
+
+        // Xóa project
         await Project.findByIdAndDelete(id);
+
+        // Xóa các task liên quan
+        for (const task of tasks) {
+            await Task.findByIdAndDelete(task._id);
+        }
 
         res.status(200).json({
             status: true,
-            message: `Xóa dự án được thực hiện thành công`,
+            message: `Xóa dự án và các task liên quan thành công`,
         });
     } catch (error) {
         console.log(error);
