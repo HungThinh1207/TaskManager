@@ -243,22 +243,63 @@ export const getTasks = async (req, res) => {
 };
 
 //can phai xu li them cac dieu kien de hien thi ra task
+// export const getProjectTask = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+//       // Kiểm tra xem 'id' có phải là một ObjectId hợp lệ của MongoDB không
+//       return res.status(400).json({ status: false, message: "ID project không hợp lệ" });
+//     }
+
+//     const project = await Project.findById(id).populate("tasks");
+
+//     if (!project) {
+//       return res.status(404).json({ status: false, message: `Không tìm thấy project với ID: ${id}` });
+//     }
+
+//     const tasks = project.tasks;
+//     res.status(200).json({
+//       status: true,
+//       tasks,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ status: false, message: "Lỗi server khi lấy tasks" });
+//   }
+// };
 export const getProjectTask = async (req, res) => {
   try {
     const { id } = req.params;
+    const { stage, isTrashed } = req.query;
 
+    // Kiểm tra xem 'id' có phải là một ObjectId hợp lệ của MongoDB không
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      // Kiểm tra xem 'id' có phải là một ObjectId hợp lệ của MongoDB không
       return res.status(400).json({ status: false, message: "ID project không hợp lệ" });
     }
 
-    const project = await Project.findById(id).populate("tasks");
+    // Xây dựng điều kiện truy vấn dựa trên stage và isTrashed
+    let query = { _id: { $in: [] }, isTrashed: isTrashed === 'true' };
+
+    if (stage) {
+      query.stage = stage;
+    }
+
+    const project = await Project.findById(id);
 
     if (!project) {
       return res.status(404).json({ status: false, message: `Không tìm thấy project với ID: ${id}` });
     }
 
-    const tasks = project.tasks;
+    // Lấy danh sách ID của tasks từ project
+    query._id.$in = project.tasks;
+
+    // Truy vấn các task với điều kiện đã được xác định
+    const tasks = await Task.find(query).populate({
+      path: "team",
+      select: "name title email",
+    }).sort({ _id: -1 });
+
     res.status(200).json({
       status: true,
       tasks,
@@ -268,7 +309,6 @@ export const getProjectTask = async (req, res) => {
     return res.status(500).json({ status: false, message: "Lỗi server khi lấy tasks" });
   }
 };
-
 
 export const getTask = async (req, res) => {
   try {

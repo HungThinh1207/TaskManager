@@ -14,6 +14,7 @@ import { FaList } from "react-icons/fa";
 import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "./task/AddSubTask";
+import { useGetAllProjectsQuery } from "../redux/slices/api/projectApiSlice";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -24,6 +25,8 @@ const ICONS = {
 const TaskCard = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
+  const { data: projectsData, isLoading } = useGetAllProjectsQuery();
+  const projectName = projectsData?.find(project => project._id === task.projectId)?.name;
 
   return (
     <>
@@ -54,7 +57,7 @@ const TaskCard = ({ task }) => {
           {/* còn phải render ra name project */}
           <span className='text-sm text-gray-600'>
             <span className="text-red-400 ">Name project: </span>
-            {task.projectId}
+            {projectName || 'Loading project name...'}
           </span>
           <div className='w-full border-t border-gray-200 my-2' />
 

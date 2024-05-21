@@ -10,7 +10,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
                 credentials: "include",
             }),
         }),
-        //còn phần get project task
         getAllTasks: builder.query({
             query: ({ strQuery, isTrashed, search }) => ({
                 url: `${TASK_URL}?stage=${strQuery}&isTrashed=${isTrashed}&search=${search}`,
@@ -19,12 +18,23 @@ export const taskApiSlice = apiSlice.injectEndpoints({
             }),
         }),
         getTaskProject: builder.query({
-            query: (id) => ({
-                url: `${TASK_URL}/project-task/${id}`,
-                method: "GET",
-                credentials: "include",
-            }),
+            query: ({ id, stage }) => {
+                const queryParams = new URLSearchParams();
+                if (stage) queryParams.append('stage', stage);
+                return {
+                    url: `${TASK_URL}/project-task/${id}?${queryParams}`,
+                    method: "GET",
+                    credentials: "include",
+                };
+            },
         }),
+        // getTaskProject: builder.query({
+        //     query: (id) => ({
+        //         url: `${TASK_URL}/project-task/${id}`,
+        //         method: "GET",
+        //         credentials: "include",
+        //     }),
+        // }),
         createTask: builder.mutation({
             query: (data) => ({
                 url: `${TASK_URL}/create`,

@@ -43,7 +43,7 @@ const Tasks = () => {
     search: "",
   });
 
-  const { data: projectTasksData, isLoading: isProjectTasksLoading } = useGetTaskProjectQuery(selectedProject || undefined);
+  const { data: projectTasksData, isLoading: isProjectTasksLoading } = useGetTaskProjectQuery({ id: selectedProject || null, stage: status });
 
   // Sử dụng dữ liệu từ query phù hợp dựa trên selectedProject
   const tasksData = selectedProject ? projectTasksData : allTasksData;
