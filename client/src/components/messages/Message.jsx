@@ -18,12 +18,12 @@ const Message = ({ message }) => {
 	return (
 		<div className={`flex ${chatClassName} items-end p-2`}>
 			<div className='chat-image avatar'>
-				<img className='w-10 h-10 rounded-full' alt='' src={profilePic || "https://mega.com.vn/media/news/0206_hinh-nen-messi-pc44.jpg"} />
+				<img className='w-10 h-10 rounded-full p-1' alt='' src={profilePic || "https://mega.com.vn/media/news/0206_hinh-nen-messi-pc44.jpg"} />
 			</div>
-			<div className={`rounded-lg px-4 py-2 ${bubbleBgColor} ${textColor} ${shakeClass} shadow`}>
+			<div className={`rounded-lg px-4 py-2 ${bubbleBgColor} ${textColor} ${shakeClass} shadow break-words`}>
 				{message.message}
 			</div>
-			<span className='text-xs text-gray-500'>{formattedTime}</span>
+			<span className='p-1 text-xs text-gray-500'>{formattedTime}</span>
 		</div>
 	);
 };
