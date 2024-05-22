@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import ModalWrapper from "./ModalWrapper";
@@ -10,11 +11,17 @@ import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
 import { toast } from "sonner";
 import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
+import SelectList from "./SelectList";
+
+const ROLE = ["ADMIN", "Project Manager", "Developer", "Tester", "DevOps"];
+const GENDER = ["male", "female"]
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
   const { user } = useSelector((state) => state.auth);
 
+  const [role, setRole] = useState(userData?.role?.toUpperCase() || ROLE[2]);
+  const [gender, setGender] = useState(userData?.gender?.toUpperCase() || GENDER[0]);
 
   const {
     register,
@@ -28,8 +35,14 @@ const AddUser = ({ open, setOpen, userData }) => {
 
   const handleOnSubmit = async (data) => {
     try {
+      const newData = {
+        ...data,
+        gender,
+        role,
+      }
       if (userData) {
-        const result = await updateUser(data).unwrap()
+        const result = await updateUser(newData).unwrap();
+        console.log("ud", data)
         toast.success("Hồ sơ được cập nhật thành công")
 
         if (userData?._id === user > _id) {
@@ -37,7 +50,8 @@ const AddUser = ({ open, setOpen, userData }) => {
         }
 
       } else {
-        await addNewUser({ ...data, password: data?.password }).unwrap();
+        // await addNewUser({ ...data, password: data?.password }).unwrap();
+        await addNewUser({ ...newData, password: data?.password }).unwrap();
         toast.success("Người dùng mới được thêm thành công")
       }
       setTimeout(() => {
@@ -79,7 +93,7 @@ const AddUser = ({ open, setOpen, userData }) => {
               register={register("profilePic")}
               error={errors.profilePic ? errors.profilePic.message : ""}
             /> */}
-            <Textbox
+            {/* <Textbox
               placeholder='Title'
               type='text'
               name='title'
@@ -89,7 +103,21 @@ const AddUser = ({ open, setOpen, userData }) => {
                 required: "Title is required!",
               })}
               error={errors.title ? errors.title.message : ""}
+            /> */}
+            <SelectList
+              label='Gender'
+              lists={GENDER}
+              selected={gender}
+              setSelected={setGender}
             />
+
+            <SelectList
+              label='Role'
+              lists={ROLE}
+              selected={role}
+              setSelected={setRole}
+            />
+
             <Textbox
               placeholder='Email Address'
               type='email'
@@ -114,19 +142,6 @@ const AddUser = ({ open, setOpen, userData }) => {
               error={errors.password ? errors.password.message : ""}
             />
 
-
-
-            <Textbox
-              placeholder='Role'
-              type='text'
-              name='role'
-              label='Role'
-              className='w-full rounded'
-              register={register("role", {
-                required: "User role is required!",
-              })}
-              error={errors.role ? errors.role.message : ""}
-            />
           </div>
 
           {isLoading || isUpdating ? (

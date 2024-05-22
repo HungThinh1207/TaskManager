@@ -77,7 +77,7 @@ const Users = () => {
     <thead className='border-b border-gray-300'>
       <tr className='text-black text-left'>
         <th className='py-2'>Full Name</th>
-        <th className='py-2'>Title</th>
+        <th className='py-2'>Gender</th>
         <th className='py-2'>Email</th>
         <th className='py-2'>Role</th>
         <th className='py-2'>Active</th>
@@ -98,7 +98,7 @@ const Users = () => {
         </div>
       </td>
 
-      <td className='p-2'>{user.title}</td>
+      <td className='p-2'>{user?.gender}</td>
       <td className='p-2'>{user.email || "user.emal.com"}</td>
       <td className='p-2'>{user.role}</td>
 

@@ -4,14 +4,18 @@ import mongoose, { Schema } from "mongoose";
 const userSchema = new Schema(
   {
     name: { type: String, required: true },
-    title: { type: String, required: true },
-    role: { type: String, required: true },
+    gender: { type: String, default: "male", enum: ["male", "female"] },
+    // title: { type: String, required: true },
+    role: {
+      type: String,
+      default: "ADMIN",
+      enum: ["ADMIN", "Project Manager", "Developer", "Tester", "DevOps"],
+    },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     isAdmin: { type: Boolean, required: true, default: false },
     tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
     isActive: { type: Boolean, required: true, default: true },
-    // gender: { type: String, required: true, enum: ["male", "female"] },
     profilePic: { type: String, default: "" },
   },
   { timestamps: true }
