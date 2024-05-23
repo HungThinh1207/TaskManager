@@ -14,11 +14,11 @@ const Users = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAction, setOpenAction] = useState(false);
+  const [openAdmin, setOpenAdmin] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  const {data, isLoading, refetch} = useGetTeamListQuery()
-  console.log(data)
-  
+  const { data, isLoading, refetch } = useGetTeamListQuery()
+
   const [deleteUser] = useDeleteUserMutation()
   const [userAction] = useUserActionMutation()
 
@@ -34,6 +34,26 @@ const Users = () => {
       setSelected(null)
       setTimeout(() => {
         setOpenAction(false)
+      }, 500);
+
+    } catch (error) {
+      console.log(err)
+      toast.error(err?.data?.message || err.error)
+    }
+  };
+
+  const userAdminHandler = async () => {
+    try {
+      const result = await userAction({
+        isAdmin: !selected?.isAdmin,
+        id: selected?._id,
+      });
+
+      refetch();
+      toast.success(result.data.message)
+      setSelected(null)
+      setTimeout(() => {
+        setOpenAdmin(false)
       }, 500);
 
     } catch (error) {
@@ -73,6 +93,11 @@ const Users = () => {
     setOpenAction(true);
   }
 
+  const userStatusAdminClick = (el) => {
+    setSelected(el);
+    setOpenAdmin(true);
+  }
+
   const TableHeader = () => (
     <thead className='border-b border-gray-300'>
       <tr className='text-black text-left'>
@@ -81,6 +106,7 @@ const Users = () => {
         <th className='py-2'>Email</th>
         <th className='py-2'>Role</th>
         <th className='py-2'>Active</th>
+        <th className='py-2'>Admin</th>
       </tr>
     </thead>
   );
@@ -111,6 +137,18 @@ const Users = () => {
           )}
         >
           {user?.isActive ? "Active" : "Disabled"}
+        </button>
+      </td>
+
+      <td>
+        <button
+          onClick={() => userStatusAdminClick(user)}
+          className={clsx(
+            "w-fit px-4 py-1 rounded-full",
+            user?.isAdmin ? "bg-green-500" : "bg-red-500"
+          )}
+        >
+          {user?.isAdmin ? "Yes" : "No"}
         </button>
       </td>
 
@@ -176,6 +214,12 @@ const Users = () => {
         open={openAction}
         setOpen={setOpenAction}
         onClick={userActionHandler}
+      />
+
+      <UserAction
+        open={openAdmin}
+        setOpen={setOpenAdmin}
+        onClick={userAdminHandler}
       />
     </>
   );

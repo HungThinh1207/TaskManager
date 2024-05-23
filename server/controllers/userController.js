@@ -215,6 +215,31 @@ export const changeUserPassword = async (req, res) => {
   }
 };
 
+// export const activateUserProfile = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     const user = await User.findById(id);
+
+//     if (user) {
+//       user.isActive = req.body.isActive; //!user.isActive
+
+//       await user.save();
+
+//       res.status(201).json({
+//         status: true,
+//         message: `Tài khoản người dùng đã được ${user?.isActive ? "kích hoạt" : "hủy bỏ"
+//           }`,
+//       });
+//     } else {
+//       res.status(404).json({ status: false, message: "Không tìm thấy người dùng" });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(400).json({ status: false, message: error.message });
+//   }
+// };
+
 export const activateUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
@@ -222,15 +247,29 @@ export const activateUserProfile = async (req, res) => {
     const user = await User.findById(id);
 
     if (user) {
-      user.isActive = req.body.isActive; //!user.isActive
+      if (req.body.isAdmin !== undefined) {
+
+        user.isAdmin = req.body.isAdmin;
+
+        res.status(201).json({
+          status: true,
+          message: `Tài khoản người dùng đã ${user.isAdmin ? "được cấp thành admin" : "bị hủy quyền admin"
+            }`,
+        });
+      }
+
+      if (req.body.isActive !== undefined) {
+
+        user.isActive = req.body.isActive;
+
+        res.status(201).json({
+          status: true,
+          message: `Tài khoản người dùng đã được ${user.isActive ? "kích hoạt" : "hủy bỏ"
+            }`,
+        });
+      }
 
       await user.save();
-
-      res.status(201).json({
-        status: true,
-        message: `Tài khoản người dùng đã được ${user?.isActive ? "kích hoạt" : "hủy bỏ"
-          }`,
-      });
     } else {
       res.status(404).json({ status: false, message: "Không tìm thấy người dùng" });
     }

@@ -8,10 +8,10 @@ export default function ConfirmatioDialog({
   open,
   setOpen,
   msg,
-  setMsg = () => {},
-  onClick = () => {},
+  setMsg = () => { },
+  onClick = () => { },
   type = "delete",
-  setType = () => {},
+  setType = () => { },
 }) {
   const closeDialog = () => {
     setType("delete");
@@ -66,7 +66,7 @@ export default function ConfirmatioDialog({
   );
 }
 
-export function UserAction({ open, setOpen, onClick = () => {} }) {
+export function UserAction({ open, setOpen, onClick = () => { } }) {
   const closeDialog = () => {
     setOpen(false);
   };
@@ -82,7 +82,7 @@ export function UserAction({ open, setOpen, onClick = () => {} }) {
           </Dialog.Title>
 
           <p className='text-center text-gray-500'>
-            {"Bạn có chắc chắn muốn kích hoạt hoặc hủy kích hoạt tài khoản này không?"}
+            {"Bạn có chắc chắn muốn sửa đổi tài khoản này không?"}
           </p>
 
           <div className='bg-gray-50 py-3 sm:flex sm:flex-row-reverse gap-4'>

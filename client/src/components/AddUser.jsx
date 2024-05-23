@@ -42,7 +42,6 @@ const AddUser = ({ open, setOpen, userData }) => {
       }
       if (userData) {
         const result = await updateUser(newData).unwrap();
-        console.log("ud", data)
         toast.success("Hồ sơ được cập nhật thành công")
 
         if (userData?._id === user > _id) {
