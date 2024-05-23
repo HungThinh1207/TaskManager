@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import Tabs from "../components/Tabs";
 import TaskTitle from "../components/TaskTitle";
-import BoardView from "../components/BoardView";
+import { BoardView, BoardViewTask } from "../components/BoardView";
 import { tasks } from "../assets/data";
 import Table from "../components/task/Table";
 import AddTask from "../components/task/AddTask";
@@ -33,6 +33,7 @@ const Tasks = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const [selected, setSelected] = useState(0);
+
   const [open, setOpen] = useState(false);
 
   const status = params?.status || "";
@@ -83,7 +84,7 @@ const Tasks = () => {
         )}
 
         {selected !== 1 ? (
-          <BoardView tasks={tasksData?.tasks} />
+          <BoardViewTask tasks={tasksData?.tasks} />
         ) : (
           <div className='w-full'>
             <Table tasks={tasksData?.tasks} />
