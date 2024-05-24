@@ -15,7 +15,6 @@ const BoardViewTask = ({ tasks, status }) => {
   const todoTasks = tasks.filter((task) => task.stage === "todo");
   const inProgressTasks = tasks.filter((task) => task.stage === "in progress");
   const completedTasks = tasks.filter((task) => task.stage === "completed");
-  console.log('sta', status)
 
   if (!status) {
     return (

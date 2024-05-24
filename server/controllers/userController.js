@@ -98,7 +98,7 @@ export const logoutUser = async (req, res) => {
 
 export const getTeamList = async (req, res) => {
   try {
-    const users = await User.find().select("name gender role email isActive isAdmin");
+    const users = await User.find().select("name gender profilePic role email isActive isAdmin");
 
     res.status(200).json(users);
   } catch (error) {

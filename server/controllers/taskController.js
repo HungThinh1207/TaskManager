@@ -83,6 +83,11 @@ export const duplicateTask = async (req, res) => {
     newTask.assets = task.assets;
     newTask.priority = task.priority;
     newTask.stage = task.stage;
+    
+    //day task vao project
+    const project = await Project.findOne({ _id: newTask.projectId });
+    project.tasks.push(task);
+    await project.save();
 
     await newTask.save();
 
@@ -374,6 +379,14 @@ export const updateTask = async (req, res) => {
     task.assets = assets;
     task.stage = stage.toLowerCase();
     task.team = team;
+
+    //day task vao project
+    if (projectId) {
+      const project = await Project.findOne({ _id: projectId });
+      project.tasks.push(task);
+      await project.save();
+    }
+
 
     await task.save();
 

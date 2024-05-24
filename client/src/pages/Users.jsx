@@ -115,10 +115,8 @@ const Users = () => {
     <tr className='border-b border-gray-200 text-gray-600 hover:bg-gray-400/10'>
       <td className='p-2'>
         <div className='flex items-center gap-3'>
-          <div className='w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-blue-700'>
-            <span className='text-xs md:text-sm text-center'>
-              {getInitials(user.name)}
-            </span>
+          <div>
+            <img className='w-10 h-10 rounded-full p-1' alt='' src={user.profilePic || "https://mega.com.vn/media/news/0206_hinh-nen-messi-pc44.jpg"} />
           </div>
           {user.name}
         </div>
