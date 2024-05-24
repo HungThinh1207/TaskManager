@@ -20,7 +20,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 
-router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
+router.get("/get-team", protectRoute, getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);
 router.get("/team-sidebar", protectRoute, getUsersForSidebar)
 

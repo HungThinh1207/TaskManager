@@ -381,7 +381,7 @@ export const updateTask = async (req, res) => {
     task.team = team;
 
     //day task vao project
-    if (projectId) {
+    if (!projectId) {
       const project = await Project.findOne({ _id: projectId });
       project.tasks.push(task);
       await project.save();

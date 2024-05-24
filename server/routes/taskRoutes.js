@@ -16,17 +16,17 @@ import { isAdminRoute, protectRoute } from "../middlewares/authMiddlewave.js";
 
 const router = express.Router();
 
-router.post("/create", protectRoute, isAdminRoute, createTask);
-router.post("/duplicate/:id", protectRoute, isAdminRoute, duplicateTask);
+router.post("/create", protectRoute, createTask);
+router.post("/duplicate/:id", protectRoute, duplicateTask);
 router.post("/activity/:id", protectRoute, postTaskActivity);
 
 router.get("/dashboard", protectRoute, dashboardStatistics);
 router.get("/", protectRoute, getTasks);
-router.get("/project-task/:id", protectRoute,getProjectTask)
+router.get("/project-task/:id", protectRoute, getProjectTask)
 router.get("/:id", protectRoute, getTask);
 
-router.put("/create-subtask/:id", protectRoute, isAdminRoute, createSubTask);
-router.put("/update/:id", protectRoute, isAdminRoute, updateTask);
+router.put("/create-subtask/:id", protectRoute, createSubTask);
+router.put("/update/:id", protectRoute, updateTask);
 router.put("/:id", protectRoute, isAdminRoute, trashTask);
 
 router.delete(
