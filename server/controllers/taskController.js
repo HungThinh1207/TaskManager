@@ -195,9 +195,19 @@ export const dashboardStatistics = async (req, res) => {
       }, {})
     ).map(([name, total]) => ({ name, total }));
 
+    //nhom nhiem vu theo stage
+    const stageData = Object.entries(
+      allTasks.reduce((result, task) => {
+        const { stage } = task;
+
+        result[stage] = (result[stage] || 0) + 1;
+        return result;
+      }, {})
+    ).map(([name, total]) => ({ name, total }));
+
     //Tính tổng nhiệm vụ
     const totalTasks = allTasks?.length;
-    const last10Task = allTasks?.slice(0, 10);
+    const last10Task = allTasks?.slice(0, 100);
 
     const summary = {
       totalTasks,
@@ -205,6 +215,7 @@ export const dashboardStatistics = async (req, res) => {
       users: isAdmin ? users : [],
       tasks: groupTaskks,
       graphData: groupData,
+      stagesData: stageData,
     };
 
     res.status(200).json({

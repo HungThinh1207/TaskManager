@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { chartData } from "../assets/data";
 
-export const Chart = ({data}) => {
+export const Chart = ({ data }) => {
   return (
     <ResponsiveContainer width={"100%"} height={300}>
       <BarChart width={150} height={40} data={data}>
@@ -25,3 +25,19 @@ export const Chart = ({data}) => {
     </ResponsiveContainer>
   );
 };
+
+export const Chart1 = ({ data }) => {
+  return (
+    <ResponsiveContainer width={"100%"} height={300}>
+      <BarChart width={150} height={40} data={data}>
+        <XAxis dataKey='name' />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <CartesianGrid strokeDasharray='3 3' />
+        <Bar dataKey='total' fill='#90ee90' />
+      </BarChart>
+    </ResponsiveContainer>
+  );
+};
+

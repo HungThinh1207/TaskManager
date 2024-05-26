@@ -24,12 +24,12 @@ const SelectProject = ({ onProjectSelect }) => {
 
   return (
     <div className="flex flex-row items-center space-x-2.5 h-12">
-      <span className="text-sm font-black text-gray-700">Chọn dự án:</span>
+      <span className="text-sm font-black text-gray-700">Select project: </span>
       <select
         className="w-[500px] h-12 text-base border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         onChange={(e) => handleProjectSelect(e.target.value)} value={selectedProject}
       >
-        <option value="">Tổng dự án</option>
+        <option value=""> Total Project</option>
         {data?.map((project) => (
           <option key={project._id} value={project._id}>
             {project.name}
