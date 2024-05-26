@@ -16,7 +16,7 @@ export const createTask = async (req, res) => {
 
     text =
       text +
-      ` Ưu tiên nhiệm vụ được đặt là ${priority} vì vậy hãy kiểm tra và hành động phù hợp. Ngày nhiệm vụ là ${new Date(
+      ` .Ưu tiên nhiệm vụ được đặt là ${priority} vì vậy hãy kiểm tra và hành động phù hợp. Ngày nhiệm vụ là ${new Date(
         date
       ).toDateString()}. Cảm ơn`;
 
@@ -99,7 +99,7 @@ export const duplicateTask = async (req, res) => {
 
     text =
       text +
-      ` Ưu tiên nhiệm vụ được đặt là ${task.priority
+      ` .Ưu tiên nhiệm vụ được đặt là ${task.priority
       } vì vậy hãy kiểm tra và hành động phù hợp. Ngày nhiệm vụ là ${task.date.toDateString()}.!!!`;
 
     await Notice.create({

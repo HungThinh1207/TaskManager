@@ -6,7 +6,8 @@ import Title from "../components/Title";
 import { useGetAllProjectsQuery, useDeleteProjectMutation } from "../redux/slices/api/projectApiSlice"
 import { getInitials } from "../utils";
 import clsx from "clsx";
-import ConfirmatioDialog from "../components/Dialogs";
+// import ConfirmatioDialog from "../components/Dialogs";
+import ConfirmatioDialogProject from "../components/ProjectDialog";
 import { toast } from "sonner";
 import AddProject from "../components/AddProject";
 import { formatDate } from "../utils/index";
@@ -145,7 +146,7 @@ const Project = () => {
             <AddProject
                 open={open} setOpen={setOpen} project={selected}
             />
-            <ConfirmatioDialog
+            <ConfirmatioDialogProject
                 open={openDialog}
                 setOpen={setOpenDialog}
                 onClick={deleteHandler}

@@ -150,14 +150,14 @@ const AddTask = ({ open, setOpen, task }) => {
 
             <UserList setTeam={setTeam} team={team} />
 
-            <div className='flex gap-4'>
-              <SelectList
-                label='Task Stage'
-                lists={LISTS}
-                selected={stage}
-                setSelected={setStage}
-              />
+            <SelectList
+              label='Task Stage'
+              lists={LISTS}
+              selected={stage}
+              setSelected={setStage}
+            />
 
+            <div className='flex gap-4'>
               <div className='w-full'>
                 <Textbox
                   placeholder='Date'

@@ -12,8 +12,8 @@ const SearchInput = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!search) return;
-    if (search.length < 3) {
-      return toast.error("Cụm từ tìm kiếm phải dài ít nhất 3 ký tự");
+    if (search.length < 2) {
+      return toast.error("Cụm từ tìm kiếm phải dài ít nhất 2 ký tự");
     }
 
     const conversation = conversations.find((c) =>
