@@ -54,24 +54,24 @@ const taskSchema = new Schema(
 );
 
 //cho tg cua task k vuot qua project
-taskSchema.pre('save', async function (next) {
-  const task = this;
-  const Project = mongoose.model('Project');
-  const project = await Project.findById(task.projectId);
+// taskSchema.pre('save', async function (next) {
+//   const task = this;
+//   const Project = mongoose.model('Project');
+//   const project = await Project.findById(task.projectId);
 
-  if (!project) {
-    return next(new Error('Dự án không tìm thấy'));
-  }
+//   if (!project) {
+//     return next(new Error('Dự án không tìm thấy'));
+//   }
 
-  const projectStartDate = project.date;
-  const projectEndDate = project.endDate;
+//   const projectStartDate = project.date;
+//   const projectEndDate = project.endDate;
 
-  if (task.date < projectStartDate || task.endDate > projectEndDate) {
-    return next(new Error('Start date và End date phải nằm trong thời gian của dự án'));
-  }
+//   if (task.date < projectStartDate || task.endDate > projectEndDate) {
+//     return next(new Error('Start date và End date phải nằm trong thời gian của dự án'));
+//   }
 
-  next();
-});
+//   next();
+// });
 
 const Task = mongoose.model("Task", taskSchema);
 

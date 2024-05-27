@@ -483,7 +483,7 @@ export const deleteRestoreTask = async (req, res) => {
       }
     } else if (actionType === "deleteAll") {
       // Tìm tất cả các task cần xóa
-      const deletedTasks = await Task.deleteMany({ isTrashed: true });
+      const deletedTasks = await Task.find({ isTrashed: true });
 
       // Duyệt qua từng task và xóa id của task khỏi danh sách tasks của project
       for (const deletedTask of deletedTasks) {
@@ -495,6 +495,7 @@ export const deleteRestoreTask = async (req, res) => {
           await project.save();
         }
       }
+      await Task.deleteMany({ isTrashed: true });
     } else if (actionType === "restore") {
       const resp = await Task.findById(id);
 
