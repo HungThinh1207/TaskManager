@@ -171,10 +171,10 @@ const Dashboard = () => {
     },
     {
       _id: "2",
-      label: "COMPLTED TASK",
-      total: totals["completed"] || 0,
-      icon: <MdAdminPanelSettings />,
-      bg: "bg-[#0f766e]",
+      label: "TODOS",
+      total: totals["todo"],
+      icon: <FaArrowsToDot />,
+      bg: "bg-[#be185d]" || 0,
     },
     {
       _id: "3",
@@ -185,10 +185,10 @@ const Dashboard = () => {
     },
     {
       _id: "4",
-      label: "TODOS",
-      total: totals["todo"],
-      icon: <FaArrowsToDot />,
-      bg: "bg-[#be185d]" || 0,
+      label: "COMPLTED TASK",
+      total: totals["completed"] || 0,
+      icon: <MdAdminPanelSettings />,
+      bg: "bg-[#0f766e]",
     },
   ];
 

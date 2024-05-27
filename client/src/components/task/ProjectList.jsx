@@ -20,6 +20,7 @@ const ProjectList = ({ setProjectId }) => {
       <select
         className='relative w-full cursor-default rounded bg-white pl-3 pr-10 text-left px-3 py-2.5 2xl:py-3 border border-gray-300 sm:text-sm'
         onChange={(e) => handleSelectProject(e.target.value)} value={selectedProject}>
+        <option value=''>Please choose a project</option>
         {data.map((project) => (
           <option className='z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm'
             key={project._id} value={project._id}>
