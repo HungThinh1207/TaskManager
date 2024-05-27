@@ -5,7 +5,7 @@ export function extractTime(dateString) {
 	return `${hours}:${minutes}`;
 }
 
-// Helper function to pad single-digit numbers with a leading zero
+// Hàm trợ giúp để đệm các số có một chữ số bằng số 0 đứng đầu
 function padZero(number) {
 	return number.toString().padStart(2, "0");
 }

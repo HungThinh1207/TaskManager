@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { getInitials } from "../utils";
 import { toast } from "sonner";
 import { useLogoutMutation } from "../redux/slices/api/authApiSlice";
-import {logout} from "../redux/slices/authSlice.js"
+import { logout } from "../redux/slices/authSlice.js"
 import AddUser from "./AddUser.jsx";
 import ChangePassword from "./ChangePassword.jsx";
 
@@ -36,10 +36,10 @@ const UserAvatar = () => {
         <Menu as='div' className='relative inline-block text-left'>
           <div>
             <Menu.Button className='w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-green-600'>
-              <span className='text-white font-semibold'>
-                {/* {getInitials(user?.name)} */}
+              {/* <span className='text-white font-semibold'>
                 {user?.name}
-              </span>
+              </span> */}
+              <img src={user?.profilePic} alt="" className='w-full h-full object-cover rounded-full' />
             </Menu.Button>
           </div>
 
@@ -95,7 +95,7 @@ const UserAvatar = () => {
         </Menu>
       </div>
       <AddUser open={open} setOpen={setOpen} userData={user} />
-      <ChangePassword open={openPassword} setOpen={setOpenPassword}/>
+      <ChangePassword open={openPassword} setOpen={setOpenPassword} />
     </>
   );
 };

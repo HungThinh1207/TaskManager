@@ -11,7 +11,6 @@ const useGetMessages = () => {
 			setLoading(true);
 			try {
 				const res = await fetch(`/api/chat/${selectedConversation._id}`);
-				console.log(selectedConversation)
 				const data = await res.json();
 				if (data.error) throw new Error(data.error);
 				setMessages(data);

@@ -38,13 +38,13 @@ const NoChatSelected = () => {
   return (
     <div className="flex items-end justify-center w-full h-full">
       <div className="px-4 text-center sm:text-lg md:text-2xl text-blue-600 font-mono flex flex-col items-center gap-2">
-        <p className="">
+        <h1 className="">
           <div className="text-7xl font-black text-blue-700">WELCOME 👋</div>
           <br />{" "}
           <div className="font-extrabold text-3xl text-blue-700">
             {authUser.name}
           </div>
-        </p>
+        </h1>
         <p>Chọn một cuộc trò chuyện để bắt đầu nhắn tin...</p>
         <div className="max-w-[550px]">
           <img src={icon} />

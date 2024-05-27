@@ -13,15 +13,24 @@ import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
 import SelectList from "./SelectList";
 
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { app } from "../utils/firebase";
+import { BiImages } from "react-icons/bi";
+
 const ROLE = ["ADMIN", "Project Manager", "Developer", "Tester", "DevOps"];
 const GENDER = ["male", "female"]
+const uploadedFileURLs = [];
 
 const AddUser = ({ open, setOpen, userData }) => {
-  let defaultValues = userData ?? {};
+  const defaultValues = userData ?? {};
   const { user } = useSelector((state) => state.auth);
 
   const [role, setRole] = useState(userData?.role?.toUpperCase() || ROLE[2]);
   const [gender, setGender] = useState(userData?.gender?.toUpperCase() || GENDER[0]);
+
+  const [assets, setAssets] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const URLS = userData?.profilePic ? [...userData.profilePic] : []
 
   const {
     register,
@@ -34,11 +43,24 @@ const AddUser = ({ open, setOpen, userData }) => {
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation()
 
   const handleOnSubmit = async (data) => {
+    for (const file of assets) {
+      setUploading(true)
+      try {
+        await upLoadFile(file)
+      } catch (error) {
+        console.error("Lỗi update file", error.message)
+        return
+      } finally {
+        setUploading(false)
+      }
+    }
+
     try {
       const newData = {
         ...data,
         gender,
         role,
+        profilePic: uploadedFileURLs,
       }
       if (userData) {
         const result = await updateUser(newData).unwrap();
@@ -60,6 +82,38 @@ const AddUser = ({ open, setOpen, userData }) => {
       // toast.error("Đã xảy ra lỗi")
     }
   };
+
+  const handleSelect = (e) => {
+    setAssets(e.target.files);
+  };
+  const upLoadFile = async (file) => {
+    const storage = getStorage(app)
+    const name = new Date().getTime() + file.name
+    const storageRef = ref(storage, name)
+    const upLoadTask = uploadBytesResumable(storageRef, file)
+
+    return new Promise((resolve, reject) => {
+      upLoadTask.on(
+        "state_changed",
+        (snapshot) => {
+          console.log("Đang tải")
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(upLoadTask.snapshot.ref)
+            .then((downLoadURL) => {
+              uploadedFileURLs.push(downLoadURL);
+              resolve()
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        }
+      )
+    })
+  }
 
   return (
     <>
@@ -103,6 +157,24 @@ const AddUser = ({ open, setOpen, userData }) => {
               })}
               error={errors.title ? errors.title.message : ""}
             /> */}
+            <div className='mt-2 flex flex-col gap-6 '>
+              <label
+                className='flex items-center gap-1 text-ascent-2 hover:text-ascent-1 cursor-pointer my-4 bg-transparent px-3 py-1 2xl:py-3 border border-gray-300 placeholder-gray-400 text-gray-900 outline-none text-base focus:ring-2 ring-blue-300 '
+                htmlFor='imgUpload'
+              >
+                <input
+                  type='file'
+                  className='hidden'
+                  id='imgUpload'
+                  onChange={(e) => handleSelect(e)}
+                  accept='.jpg, .png, .jpeg'
+                  multiple={true}
+                />
+                <BiImages />
+                <span>Add Picture</span>
+              </label>
+            </div>
+
             <SelectList
               label='Gender'
               lists={GENDER}
