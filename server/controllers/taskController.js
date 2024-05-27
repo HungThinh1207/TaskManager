@@ -9,6 +9,14 @@ export const createTask = async (req, res) => {
 
     const { title, team, projectId, stage, date, endDate, priority, assets, typeIssue } = req.body;
 
+    // Tìm project liên quan đến task
+    const project = await Project.findById(projectId);
+
+    // Kiểm tra xem phạm vi ngày của task có nằm trong phạm vi ngày của project không
+    if (new Date(date) < project.date || new Date(endDate) > project.endDate) {
+      return res.status(400).json({ status: false, message: "Start date và End date phải nằm trong phạm vi ngày của project" });
+    }
+
     let text = "Nhiệm vụ mới đã được giao cho bạn";
     if (team?.length > 1) {
       text = text + ` và ${team?.length - 1} người khác`;
@@ -48,7 +56,7 @@ export const createTask = async (req, res) => {
     });
 
     //day task vao project
-    const project = await Project.findOne({ _id: projectId });
+    //const project = await Project.findOne({ _id: projectId });
     project.tasks.push(task);
     await project.save();
 
@@ -380,6 +388,12 @@ export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { projectId, title, date, endDate, team, stage, priority, assets, typeIssue } = req.body;
+
+    // Kiểm tra xem phạm vi ngày của task có nằm trong phạm vi ngày của project không
+    const projects = await Project.findById(projectId);
+    if (new Date(date) < projects.date || new Date(endDate) > projects.endDate) {
+      return res.status(400).json({ status: false, message: "Start date và End date phải nằm trong phạm vi ngày của project" });
+    }
 
     const task = await Task.findById(id);
 
