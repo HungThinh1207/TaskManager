@@ -11,6 +11,11 @@ const taskSchema = new Schema(
       default: "normal",
       enum: ["high", "medium", "normal", "low"],
     },
+    typeIssue: {
+      type: String,
+      default: "design",
+      enum: ["design", "document", "front-end", "back-end", "database", "test", "fix"],
+    },
     stage: {
       type: String,
       default: "todo",
@@ -49,7 +54,7 @@ const taskSchema = new Schema(
 );
 
 //cho tg cua task k vuot qua project
-taskSchema.pre('save', async function(next) {
+taskSchema.pre('save', async function (next) {
   const task = this;
   const Project = mongoose.model('Project');
   const project = await Project.findById(task.projectId);

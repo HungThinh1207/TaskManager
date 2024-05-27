@@ -7,7 +7,7 @@ export const createTask = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const { title, team, projectId, stage, date, endDate, priority, assets } = req.body;
+    const { title, team, projectId, stage, date, endDate, priority, assets, typeIssue } = req.body;
 
     let text = "Nhiệm vụ mới đã được giao cho bạn";
     if (team?.length > 1) {
@@ -44,6 +44,7 @@ export const createTask = async (req, res) => {
       priority: priority.toLowerCase(),
       assets,
       activities: activity,
+      typeIssue: typeIssue.toLowerCase(),
     });
 
     //day task vao project
@@ -83,7 +84,8 @@ export const duplicateTask = async (req, res) => {
     newTask.assets = task.assets;
     newTask.priority = task.priority;
     newTask.stage = task.stage;
-    
+    newTask.typeIssue = task.typeIssue;
+
     //day task vao project
     const project = await Project.findOne({ _id: newTask.projectId });
     project.tasks.push(task);
@@ -377,11 +379,10 @@ export const createSubTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const { projectId, title, date, endDate, team, stage, priority, assets } = req.body;
+    const { projectId, title, date, endDate, team, stage, priority, assets, typeIssue } = req.body;
 
     const task = await Task.findById(id);
 
-    //thieu doi project
     task.projectId = projectId;
     task.title = title;
     task.date = date;
@@ -390,6 +391,7 @@ export const updateTask = async (req, res) => {
     task.assets = assets;
     task.stage = stage.toLowerCase();
     task.team = team;
+    task.typeIssue = typeIssue.toLowerCase();
 
     //day task vao project
     if (!projectId) {

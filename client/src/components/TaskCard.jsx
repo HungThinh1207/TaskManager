@@ -55,11 +55,17 @@ const TaskCard = ({ task }) => {
           </div>
           <div className='w-full border-t border-gray-200 my-2' />
 
-          {/* còn phải render ra name project */}
+          <span className='text-sm text-gray-600'>
+            <span className="text-blue-500 ">Type Task: </span>
+            {task?.typeIssue || 'Loading type task...'}
+          </span>
+
+          <div className='w-full border-t border-gray-200 my-2' />
           <span className='text-sm text-gray-600'>
             <span className="text-red-400 ">Name project: </span>
             {projectName || 'Loading project name...'}
           </span>
+
           <div className='w-full border-t border-gray-200 my-2' />
 
           <span className='text-sm text-gray-600'>
@@ -85,7 +91,7 @@ const TaskCard = ({ task }) => {
             </div>
             <div className='flex gap-1 items-center text-sm text-gray-600 '>
               <FaList />
-              <span>0/{task?.subTasks?.length}</span>
+              <span>{task?.subTasks?.length}</span>
             </div>
           </div>
 

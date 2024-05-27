@@ -18,6 +18,7 @@ import ProjectList from "./ProjectList"
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
+const TYPES = ["DESIGN", "DOCUMENT", "FRONT-END", "BACK-END", "DATABASE", "TEST", "FIX"];
 
 const uploadedFileURLs = [];
 
@@ -31,6 +32,7 @@ const AddTask = ({ open, setOpen, task }) => {
     projectId: task?.projectId || {},
     stage: "",
     priority: "",
+    typeIssue: "",
     assets: [],
   }
 
@@ -42,6 +44,7 @@ const AddTask = ({ open, setOpen, task }) => {
   const [team, setTeam] = useState(task?.team || []);
   const [projectId, setProjectId] = useState(task?.projectId);
   const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
+  const [typeIssue, setTypeIssue] = useState(task?.typeIssue?.toUpperCase() || TYPES[0]);
   const [priority, setPriority] = useState(
     task?.priority?.toUpperCase() || PRIORIRY[2]
   );
@@ -75,6 +78,7 @@ const AddTask = ({ open, setOpen, task }) => {
         team,
         stage,
         priority,
+        typeIssue,
       }
 
       const res = task?._id
@@ -146,6 +150,14 @@ const AddTask = ({ open, setOpen, task }) => {
               register={register("title", { required: "Title is required" })}
               error={errors.title ? errors.title.message : ""}
             />
+
+            <SelectList
+              label='Task Type'
+              lists={TYPES}
+              selected={typeIssue}
+              setSelected={setTypeIssue}
+            />
+
             <ProjectList setProjectId={setProjectId} projectId={projectId} />
 
             <UserList setTeam={setTeam} team={team} />
