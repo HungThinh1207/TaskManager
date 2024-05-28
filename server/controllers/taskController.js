@@ -239,24 +239,55 @@ export const dashboardStatistics = async (req, res) => {
   }
 };
 
+// export const getTasks = async (req, res) => {
+//   try {
+//     const { stage, isTrashed } = req.query;
+
+//     let query = { isTrashed: isTrashed ? true : false };
+
+//     if (stage) {
+//       query.stage = stage;
+//     }
+
+//     let queryResult = Task.find(query)
+//       .populate({
+//         path: "team",
+//         select: "name title email",
+//       })
+//       .sort({ _id: -1 });
+
+//     const tasks = await queryResult;
+
+//     res.status(200).json({
+//       status: true,
+//       tasks,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(400).json({ status: false, message: error.message });
+//   }
+// };
 export const getTasks = async (req, res) => {
   try {
+    const { userId, isAdmin } = req.user;
     const { stage, isTrashed } = req.query;
 
     let query = { isTrashed: isTrashed ? true : false };
+
+    if (!isAdmin) {
+      query.team = { $all: [userId] };
+    }
 
     if (stage) {
       query.stage = stage;
     }
 
-    let queryResult = Task.find(query)
+    const tasks = await Task.find(query)
       .populate({
         path: "team",
         select: "name title email",
       })
       .sort({ _id: -1 });
-
-    const tasks = await queryResult;
 
     res.status(200).json({
       status: true,
@@ -267,6 +298,7 @@ export const getTasks = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
+
 
 //can phai xu li them cac dieu kien de hien thi ra task
 // export const getProjectTask = async (req, res) => {

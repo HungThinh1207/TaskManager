@@ -57,7 +57,9 @@ const TaskCard = ({ task }) => {
 
           <span className='text-sm text-gray-600'>
             <span className="text-blue-500 ">Type Task: </span>
+            {"[ "}
             {task?.typeIssue || 'Loading type task...'}
+            {" ]"}
           </span>
 
           <div className='w-full border-t border-gray-200 my-2' />
