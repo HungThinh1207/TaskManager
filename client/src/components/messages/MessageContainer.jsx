@@ -21,13 +21,6 @@ const MessageContainer = () => {
         <>
           <div className="bg-white px-4 py-4 mb-2 border-b border-gray-300 flex items-center">
             {selectedConversation?.profilePic && (
-<<<<<<< HEAD
-              <img
-                src={selectedConversation.profilePic}
-                alt="Profile"
-                className="w-8 mr-3"
-              />
-=======
               <div className="w-10 h-10 rounded-full overflow-hidden flex justify-center items-center mr-3">
                 <img
                   src={selectedConversation.profilePic}
@@ -35,7 +28,6 @@ const MessageContainer = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
->>>>>>> fix UI avatar
             )}
             <span className=" text-gray-900 font-semibold">
               {selectedConversation?.name}

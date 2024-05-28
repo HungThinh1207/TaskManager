@@ -19,11 +19,7 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
         <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-10 h-10 rounded-full overflow-hidden flex justify-center items-center mr-3">
             <img
-<<<<<<< HEAD
-              className="w-10"
-=======
-              className="w-w-full h-full object-cover"
->>>>>>> fix UI avatar
+              className="w-full h-full object-cover"
               src={
                 conversation.profilePic ||
                 "https://mega.com.vn/media/news/0206_hinh-nen-messi-pc44.jpg"
