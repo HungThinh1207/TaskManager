@@ -23,7 +23,7 @@ export const SocketContextProvider = ({ children }) => {
 
 			setSocket(socket);
 
-			// socket.on() is used to listen to the events. can be used both on client and server side
+			// socket.on() được sử dụng để lắng nghe các sự kiện. có thể được sử dụng cả ở phía máy khách và máy chủ
 			socket.on("getOnlineUsers", (users) => {
 				setOnlineUsers(users);
 			});
