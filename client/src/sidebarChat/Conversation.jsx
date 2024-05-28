@@ -19,7 +19,7 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
         <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div>
             <img
-              className="w-10 rounded-full"
+              className="w-10"
               src={
                 conversation.profilePic ||
                 "https://mega.com.vn/media/news/0206_hinh-nen-messi-pc44.jpg"

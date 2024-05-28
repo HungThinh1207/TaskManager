@@ -24,7 +24,7 @@ const MessageContainer = () => {
               <img
                 src={selectedConversation.profilePic}
                 alt="Profile"
-                className="w-8 rounded-full mr-3"
+                className="w-8 mr-3"
               />
             )}
             <span className=" text-gray-900 font-semibold">
