@@ -19,8 +19,15 @@ const MessageContainer = () => {
         <NoChatSelected />
       ) : (
         <>
-          <div className="bg-white px-4 py-4 mb-2 border-b border-gray-300">
-            <span className=" text-gray-900 font-bold">
+          <div className="bg-white px-4 py-4 mb-2 border-b border-gray-300 flex items-center">
+            {selectedConversation?.profilePic && (
+              <img
+                src={selectedConversation.profilePic}
+                alt="Profile"
+                className="w-8 rounded-full mr-3"
+              />
+            )}
+            <span className=" text-gray-900 font-semibold">
               {selectedConversation?.name}
             </span>
           </div>
