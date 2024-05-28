@@ -65,7 +65,7 @@ const TaskCard = ({ task }) => {
           <div className='w-full border-t border-gray-200 my-2' />
           <span className='text-sm text-gray-600'>
             <span className="text-red-400 ">Name project: </span>
-            {projectName || 'Loading project name...'}
+            {projectName || 'No project'}
           </span>
 
           <div className='w-full border-t border-gray-200 my-2' />
@@ -144,7 +144,7 @@ const TaskCard = ({ task }) => {
             className='w-full flex gap-4 items-center text-sm text-gray-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'
           >
             <IoMdAdd className='text-lg' />
-            <span>ADD SUBTASK</span>
+            <span className="text-green-500">ADD SUBTASK</span>
           </button>
         </div>
       </div>
