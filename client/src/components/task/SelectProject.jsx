@@ -3,13 +3,13 @@ import { useState } from "react";
 
 const SelectProject = ({ onProjectSelect }) => {
   const { data, isLoading } = useGetAllProjectsQuery();
-  const [selectedProject, setSelectedProject] = useState('');
+  const [selectedProject, setSelectedProject] = useState("");
 
   const handleProjectSelect = (e) => {
     // Lấy giá trị id từ sự kiện onChange
     setSelectedProject(e);
     onProjectSelect(e);
-    console.log(e)
+    console.log(e);
   };
 
   // const handleFindTasks = () => {
@@ -23,11 +23,12 @@ const SelectProject = ({ onProjectSelect }) => {
   // };
 
   return (
-    <div className="flex flex-row items-center space-x-2.5 h-12">
+    <div className="flex flex-row items-center space-x-2.5 h-12 mb-4">
       <span className="text-sm font-black text-gray-700">Select project: </span>
       <select
-        className="w-[500px] h-12 text-base border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-        onChange={(e) => handleProjectSelect(e.target.value)} value={selectedProject}
+        className="w-[500px] h-12 pr-4 text-base border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        onChange={(e) => handleProjectSelect(e.target.value)}
+        value={selectedProject}
       >
         <option value=""> Total Project</option>
         {data?.map((project) => (
